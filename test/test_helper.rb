@@ -19,6 +19,7 @@ require 'i18n'
 require 'rails'
 require 'action_controller/railtie'
 require 'action_mailer/railtie'
+require 'rack/test'
 
 require 'route_translator'
 

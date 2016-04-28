@@ -1,4 +1,5 @@
 require File.join(Dummy::Application.root, 'dummy_mounted_app.rb')
+require File.join(Dummy::Application.root, 'blorgh_engine.rb')
 
 Dummy::Application.routes.draw do
   localized do
@@ -9,6 +10,8 @@ Dummy::Application.routes.draw do
     get 'prefixed_optional(/p-:page)', to: 'dummy#prefixed_optional', as: :prefixed_optional
 
     get ':id-suffix', to: 'dummy#suffix'
+
+    mount Blorgh::Engine, at: '/blorgh'
   end
 
   get 'partial_caching', to: 'dummy#partial_caching'

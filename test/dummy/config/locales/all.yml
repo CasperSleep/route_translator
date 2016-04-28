@@ -5,11 +5,14 @@ en:
   routes:
     dummy: dummy
     show: show
+    search: search
 es:
   routes:
     dummy: dummy
     show: mostrar
+    search: buscar
 ru:
   routes:
     dummy: манекен
     show: показывать
+    search: поиск

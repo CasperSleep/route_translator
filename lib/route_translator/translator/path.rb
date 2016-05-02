@@ -28,7 +28,7 @@ module RouteTranslator
       module_function
 
       # Translates a path and adds the locale prefix.
-      def translate(path, locale)
+      def translate(path, locale, exclude_locale = false)
         new_path = path.dup
         final_optional_segments = new_path.slice!(%r{(\([^\/]+\))$})
         translated_segments = new_path.split('/').map do |seg|
@@ -36,7 +36,7 @@ module RouteTranslator
         end
         translated_segments.reject!(&:empty?)
 
-        if display_locale?(locale) && !locale_param_present?(new_path)
+        if display_locale?(locale) && !locale_param_present?(new_path) && !exclude_locale
           translated_segments.unshift(locale.to_s.downcase)
         end
 

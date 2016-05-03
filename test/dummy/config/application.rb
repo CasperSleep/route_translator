@@ -1,12 +1,8 @@
 require 'i18n'
+require 'rack/test'
 require 'action_controller/railtie'
 
-begin
-  require 'active_resource/railtie'
-rescue LoadError
-  ''
-end
-
+$LOAD_PATH.unshift(File.expand_path('../../../../lib', __FILE__))
 require 'route_translator'
 
 module Dummy

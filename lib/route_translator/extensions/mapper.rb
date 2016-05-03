@@ -5,9 +5,9 @@ module ActionDispatch
   module Routing
     class Mapper
       def localized
-        @localized = true
+        Thread.current[:localized] = true
         yield
-        @localized = false
+        Thread.current[:localized] = false
       end
 
       def add_route(action, options) # :nodoc:
@@ -25,13 +25,13 @@ module ActionDispatch
           options[:as] = name_for_action(options[:as], action)
         end
 
-        begin
-          mapping = Mapping.new(@set, @scope, path, options)
-        rescue ArgumentError
-          mapping = Mapping.build(@scope, @set, URI.parser.escape(path), options.delete(:as), options)
-        end
+        mapping = begin
+                    Mapping.new(@set, @scope, path, options)
+                  rescue ArgumentError
+                    Mapping.build(@scope, @set, URI.parser.escape(path), options.delete(:as), options)
+                  end
 
-        if @localized
+        if Thread.current[:localized]
           @set.add_localized_route(*mapping.to_route)
         else
           @set.add_route(*mapping.to_route)

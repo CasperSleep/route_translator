@@ -53,7 +53,7 @@ module RouteTranslator
 
       available_locales.each do |locale|
         begin
-          translated_path = RouteTranslator::Translator::Path.translate(conditions[:path_info], locale)
+          translated_path = RouteTranslator::Translator::Path.translate(conditions[:path_info], locale, route_set.exclude_locale)
         rescue I18n::MissingTranslationData => e
           raise e unless RouteTranslator.config.disable_fallback
           next
